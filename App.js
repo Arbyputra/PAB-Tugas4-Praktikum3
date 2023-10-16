@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from "react";
+import { View, StatusBar } from "react-native";
+import Header from "./components/header";
+import Button from "./components/button";
+import Separator from "./components/separator";
+import List from "./screens/list";
+import Article from "./screens/article";
 
-export default function App() {
+// Functional Component
+const App = () => {
+  // State Declaration
+  const [page, setPage] = useState("list");
+
+  // Arrow Function inside Functional Component
+  const changePage = (pageName) => {
+    // Change state value
+    setPage(pageName);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <StatusBar style="light" backgroundColor="#AA0002" />
+      <Header onListPress={() => changePage("list")} onArticlePress={() => changePage("article")} />
+      <Separator height={30} />
+      {page === "list" ? <List /> : page === "article" ? <Article /> : null}
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
